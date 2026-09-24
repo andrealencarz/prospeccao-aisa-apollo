@@ -35,13 +35,10 @@ A **AIsa** é um **conector MCP** (Model Context Protocol) — um "plugin" que d
 **Passo a passo:**
 
 1. Crie uma conta e gere uma chave de API em [aisa.one](https://aisa.one).
-2. Adicione a AIsa como conector MCP no Claude:
-   - **Pelo terminal (Claude Code)**:
-     ```bash
-     claude mcp add aisa https://mcp.aisa.one/mcp --header "Authorization: Bearer SUA_CHAVE_AQUI"
-     ```
-   - **Pelo app do Claude (sem terminal)**: procure nas Configurações por algo como "Conectores" / "MCP Servers" / "Adicionar conector" e informe a URL `https://mcp.aisa.one/mcp`, com o cabeçalho `Authorization: Bearer SUA_CHAVE_AQUI`. O nome exato do menu pode variar conforme a versão do app.
-3. Se tiver dúvida no passo 2, pergunte pro Claude no chat: "como eu adiciono um conector MCP customizado aqui?" — ele te guia pela interface específica da sua versão.
+2. No app do Claude, procure nas Configurações por algo como "Conectores" ou "MCP Servers" → "Adicionar conector" e informe:
+   - URL: `https://mcp.aisa.one/mcp`
+   - Cabeçalho de autorização: `Authorization: Bearer SUA_CHAVE_AQUI` (a chave que você gerou no passo 1)
+3. Se não achar essa tela ou tiver qualquer dúvida, pergunte direto pro Claude no chat: "me ajuda a conectar o servidor MCP da AIsa, a URL é `https://mcp.aisa.one/mcp` e minha chave é `SUA_CHAVE_AQUI`" — ele te guia pela interface da sua versão específica do app.
 
 Depois de conectado, teste digitando no Claude Code:
 ```

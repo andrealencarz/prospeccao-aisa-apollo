@@ -30,9 +30,18 @@ Isso baixa o `SKILL.md` do repositório pra `~/.claude/skills/prospeccao-aisa-ap
 
 ## Pré-requisito: MCP da AIsa conectado
 
-Esse skill usa ferramentas de um conector chamado **AIsa** (gateway com acesso a Google Maps, Apollo e outras +950 fontes de dados numa chave só). Sem esse conector ativo na sua conta do Claude Code, o skill instala mas não tem o que buscar.
+A **AIsa** é um **conector MCP** (Model Context Protocol) — um "plugin" que dá ao Claude acesso a mais de 950 APIs de dados (Google Maps, Apollo, redes sociais, etc.) usando uma chave só. É isso que o skill usa por baixo dos panos. Sem esse conector ativo na sua conta, o skill instala mas não tem o que buscar.
 
-> ⚠️ **Professor, preencha aqui como o aluno deve conectar a AIsa no ambiente de vocês** (ex: link de cadastro, onde pegar a chave de API, como adicionar o MCP server no Claude Code).
+**Passo a passo:**
+
+1. Crie uma conta e gere uma chave de API em [aisa.one](https://aisa.one).
+2. Adicione a AIsa como conector MCP no Claude:
+   - **Pelo terminal (Claude Code)**:
+     ```bash
+     claude mcp add aisa https://mcp.aisa.one/mcp --header "Authorization: Bearer SUA_CHAVE_AQUI"
+     ```
+   - **Pelo app do Claude (sem terminal)**: procure nas Configurações por algo como "Conectores" / "MCP Servers" / "Adicionar conector" e informe a URL `https://mcp.aisa.one/mcp`, com o cabeçalho `Authorization: Bearer SUA_CHAVE_AQUI`. O nome exato do menu pode variar conforme a versão do app.
+3. Se tiver dúvida no passo 2, pergunte pro Claude no chat: "como eu adiciono um conector MCP customizado aqui?" — ele te guia pela interface específica da sua versão.
 
 Depois de conectado, teste digitando no Claude Code:
 ```

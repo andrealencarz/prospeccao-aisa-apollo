@@ -4,7 +4,23 @@ Skill do Claude Code pra prospecção B2B ativa. Você diz o nicho e a cidade, o
 
 ## Instalar
 
-Rode no terminal (não dentro do chat do Claude):
+### Opção fácil — sem terminal (recomendado pra quem não é técnico)
+
+Abra o Claude Code, cole a mensagem abaixo no chat e mande:
+
+```
+Instale esse skill pra mim: baixe o conteúdo de
+https://raw.githubusercontent.com/andrealencarz/prospeccao-aisa-apollo/main/SKILL.md
+e salve em ~/.claude/skills/prospeccao-aisa-apollo/SKILL.md (criando as pastas se
+precisar). Depois, adicione ao meu ~/.claude/CLAUDE.md (crie o arquivo se não existir)
+um bloco dizendo que quando eu digitar /prospeccao-aisa-apollo, invoque o Skill tool
+com skill: "prospeccao-aisa-apollo" antes de fazer qualquer outra coisa. Não duplique
+esse bloco se ele já existir.
+```
+
+O próprio Claude baixa o arquivo e configura tudo. Depois é só usar `/prospeccao-aisa-apollo` normalmente.
+
+### Opção terminal (pra quem tem familiaridade)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/andrealencarz/prospeccao-aisa-apollo/main/install.sh | bash

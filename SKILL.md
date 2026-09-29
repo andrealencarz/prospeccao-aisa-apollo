@@ -67,6 +67,8 @@ Depois, pra quem teve responsável encontrado:
 operation_id: post_apollo_people_match
 arguments: { id: <id retornado> }
 ```
+⚠️ **`post_apollo_people_match` está quebrado do lado da AIsa** (validado em 2026-09-29 por 4 formas diferentes — id, linkedin_url, nome+domínio, nome+empresa — todas "request does not match the endpoint contract", embora o contrato publicado aceite esses campos). Tentar **uma vez** só; se der esse erro, não repetir as outras formas, ir direto pro fallback de LinkedIn abaixo.
+🚫 **Nunca usar `post_apollo_people_bulk_match` como substituto** — ele passa na validação, mas custa **~US$ 1,78 por pessoa** (cotação real de 2026-09-29), ~90x o people_match. Top 10 daria ~US$ 17,80 por busca. Proibido no fluxo automático; só usar se o usuário pedir explicitamente sabendo do preço.
 Isso é **enriquecimento opcional**, não a base do resultado — se o Apollo estiver instável (erro de contrato/502, já aconteceu antes) ou não achar nada, seguir o fluxo normalmente e entregar a tabela com o que já tem (título + Google Maps), mencionando em uma frase que o enriquecimento extra não completou dessa vez.
 `founded_year` do Apollo, quando vier, entra como informação extra na tabela final — mas não é mais o critério de ranking (isso agora é `votes_count`).
 `post_apollo_people_match` retorna também `linkedin_url` da pessoa (perfil dela no LinkedIn) — **sempre capturar esse campo quando vier** e incluir na tabela final como link.
@@ -109,8 +111,7 @@ Apollo continua útil só pro que Google Maps não tem: nome do responsável e a
 - **Keyword genérica em inglês no Apollo gera ruído independente do volume total**: `["gym","fitness"]` em Fortaleza trouxe 351 resultados totais mas só ~1 em 25 era academia de verdade. Isso é sintoma do problema que o Google Maps resolve — mas se algum dia usar Apollo como busca principal de novo, lembrar disso.
 - **Nicho regulado/corporativo tinha cobertura melhor no Apollo** (seguradora em Pernambuco: 274 resultados, ~80% precisão) — mas o Google Maps também cobre esses nichos bem e com mais dado (endereço/telefone), então não há mais motivo forte pra usar Apollo como busca primária nem nesses casos.
 - **Canal Instagram foi testado e descartado** para descoberta de leads: `get_instagram_search_profiles` com frase exata não faz correspondência de frase, só pondera termos soltos — 54 perfis retornados, 0 relevantes. `get_instagram_search_hashtag` deu erro 400 de contrato. Não usar esse canal.
-- **`post_apollo_people_match` e `post_apollo_people_bulk_match` deram erro "request does not match the endpoint contract"** em teste real (2026-09-25), mesmo com parâmetros válidos e variados (por id, por nome+domínio, com/sem reveal). Parece instabilidade pontual da AIsa nesse endpoint específico — tratar como best-effort (passo 8), nunca bloquear a entrega do resultado por causa disso.
-- **`post_apollo_people_bulk_match` não substitui múltiplos `post_apollo_people_match`** de forma confiável — mesmo erro de contrato nos dois. Preferir tentar `post_apollo_people_match` individual quando `bulk_match` falhar.
+- **Diagnóstico completo do Apollo (2026-09-29, via MCP, chave real)**: busca de pessoas (`post_apollo_mixed_people_api_search`) funciona normal (US$ 0,012). `post_apollo_people_match` falha em todas as 4 formas de identificação com "request does not match the endpoint contract" — defeito da AIsa, não do parâmetro (o contrato publicado via `get_details` lista `id`, `linkedin_url`, `name`, `domain` como aceitos). `post_apollo_people_bulk_match` com `{details:[{id}]}` **passa** na validação (o erro de 2026-09-25 foi por causa de `reveal_personal_emails` no corpo), mas cota **US$ 1,78 por pessoa** — caro demais, fora do fluxo. Script de diagnóstico em `~/aisa-tools/check_apollo_mcp.py` (precisa de `AISA_API_KEY`).
 - **Apollo não acha responsável de negócio sem site, ponto final** (precisa de domínio, não busca por nome de empresa em texto). Pra profissional autônomo (dentista, advogado, personal, esteticista) isso é a maioria dos casos. Testado em Teresina: dos 10 do shortlist "zero avaliação", 0 tinham site, então Apollo não achava nada pra nenhum. **O nome do responsável já estava no `title` do Google Maps em 4 dos 10** ("Consultório Odontológico Dra. Fulana", "Fulana Cardoso Odontologia") — extração de texto grátis resolve o que o Apollo estruturalmente não consegue nesse perfil de negócio. Sempre tentar isso antes/em paralelo ao Apollo (ver passo 7).
 
 ### Formato de `location_name` pro Google Maps
@@ -120,7 +121,9 @@ Apollo continua útil só pro que Google Maps não tem: nome do responsável e a
 ### Custo de referência (plan "builder", preços podem variar)
 - `post_dataforseo_serp_google_maps_live`: ~$0.002-0.012/call (até 100 resultados) — motor principal, muito barato
 - `post_apollo_mixed_people_api_search`: ~$0.012/call (uma call cobre todo o shortlist)
-- `post_apollo_people_match`: preço dinâmico, cotar com `get_details` antes — mas instável no momento (ver lição acima), tratar como best-effort
+- `post_apollo_people_match`: ~US$ 0,02 cotado, mas quebrado do lado da AIsa (ver lição acima) — tentar 1x, cair pro fallback
+- `post_apollo_people_bulk_match`: **~US$ 1,78 por pessoa** — proibido no fluxo automático
+- `post_tavily_search` (fallback de LinkedIn): ~US$ 0,008/busca
 - `get_instagram_search_profiles`: baixo custo, mas canal descartado pra descoberta
 
 ### Regras operacionais (sempre válidas, independente da comunicação com o usuário)

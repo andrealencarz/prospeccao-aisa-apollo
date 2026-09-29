@@ -50,7 +50,13 @@ Não funciona pra clínica com nome de marca genérico ("Clínica Odontológica 
 ### 8. Apresentar tabela (linguagem simples, sem jargão)
 | Empresa | Avaliações | Endereço | Telefone | Site | Responsável |
 |---|---|---|---|---|---|
-| Nome | "0 avaliações (provável negócio novo)" ou "N avaliações, nota X" | endereço completo | telefone ou "—" | domínio ou "sem site" | nome extraído do título, ou "não identificado" (a confirmar no passo 9) |
+| Nome | "0 avaliações (provável negócio novo)" ou "N avaliações, nota X" | endereço completo | telefone ou "—" | domínio, "só Instagram", "só link" ou "sem site" | nome extraído do título, ou "não identificado" (a confirmar no passo 9) |
+
+**A coluna Site é obrigatória em toda tabela entregue** — inclusive nas tabelas secundárias/resumidas e mesmo quando quase todo mundo é "sem site" (é sinal de venda: quem não tem site é lead pra serviço de presença digital). Valores:
+- domínio próprio (ex: `octoobrand.com.br`)
+- "só Instagram" quando `domain` for instagram.com
+- "só link" quando for página genérica que não é site próprio (linktr.ee, wa.me, bit.ly, sites.google.com, subdomínio de construtor tipo *.site123.me / *.netlify.app / *.lovable.app)
+- "sem site" quando `domain` vier nulo
 
 Se veio pouco resultado: ampliar sozinho (tentar sem filtro de bairro, ou variação da palavra-chave) e mencionar no resumo final — nunca citar "items_count" ou jargão técnico.
 

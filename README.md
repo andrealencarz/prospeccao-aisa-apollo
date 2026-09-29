@@ -59,30 +59,38 @@ Exemplos:
 /prospeccao-aisa-apollo salão de beleza São Paulo
 /prospeccao-aisa-apollo dentista em Fortaleza
 /prospeccao-aisa-apollo imobiliária Aldeota Fortaleza
+/prospeccao-aisa-apollo gráfica Teresina
 ```
+
+Use sempre **cidade** (com bairro opcional). Se pedir só o estado ("agência digital Ceará"), o skill busca na capital automaticamente — buscar o estado inteiro de uma vez trava.
 
 ## O que você recebe
 
 Uma tabela com, pra cada empresa encontrada:
-- Nome
-- Avaliações no Google (poucas/zero = sinal de negócio novo — é o critério de ranqueamento)
-- Endereço completo (com bairro)
-- Telefone
-- Site (quando tem)
-- Responsável (extraído do nome do negócio quando é consultório individual, ou via Apollo quando tem site)
+- **Nome**
+- **Avaliações no Google** — poucas ou zero = sinal de negócio novo (é o critério de ordenação)
+- **Endereço completo** (com bairro)
+- **Telefone**
+- **Site** — sempre aparece, com um destes valores: o domínio próprio, "só Instagram", "só link" (Linktree, WhatsApp, página de construtor de site) ou "sem site". Quem não tem site é um ótimo lead pra serviço de presença digital.
+- **Responsável** — extraído do nome do negócio quando é autônomo ("Dra. Fulana Odontologia", "Luciano Gráfica"), ou via Apollo quando a empresa tem site próprio
+- **LinkedIn do responsável** — quando encontrado com confiança (nome e empresa batendo); senão fica "—"
+
+Quando a primeira busca vem cheia (nicho denso), o skill puxa uma segunda leva sozinho, chegando a até 200 empresas.
 
 ## Limitações importantes
 
 - **Não existe fonte de CNPJ/data de fundação oficial** no que o skill usa — o "negócio novo" é estimado pelo número de avaliações no Google, não é uma data exata.
-- **Apollo não acha responsável de negócio sem site** — comum pra profissional autônomo pequeno. Nesses casos o skill tenta extrair o nome do próprio nome do negócio no Google Maps (ex: "Dra. Fulana Odontologia"), mas nem sempre tem esse padrão.
+- **Responsável nem sempre aparece**: o Apollo só acha quem tem site próprio. Em nichos de comércio local (gráfica, salão, oficina) quase ninguém tem site, e o nome do negócio muitas vezes traz só o primeiro nome do dono.
+- **E-mail e telefone pessoal do responsável estão indisponíveis no momento**: a função do Apollo que revela esse contato está com defeito do lado da AIsa (confirmado em teste). O telefone da empresa, que vem do Google, continua saindo normalmente. A alternativa de enriquecimento em lote do Apollo funciona, mas custa ~US$ 1,78 por pessoa, então o skill **não** usa.
+- **LinkedIn acerta em cerca de 1 a cada 3 tentativas**: funciona bem quando a pessoa cita a própria empresa no perfil; com nome comum, o skill prefere deixar "—" a colar um link errado.
 - **Cada busca gasta crédito da AIsa** (tipicamente centavos de dólar por busca completa) — não é gratuito, ainda que barato.
-- **Foco em nicho + cidade grande/média brasileira** — testado em várias capitais; cidade muito pequena pode ter menos resultado.
 
 ## Se der erro
 
-- **"Invalid Field: location_name"**: o skill já tenta se corrigir sozinho. Se persistir, tentar rodar de novo geralmente resolve.
-- **Erro de instabilidade no Apollo** ("contract mismatch" ou 502): o skill já trata isso como best-effort e entrega o resto do resultado normalmente.
+- **"Invalid Field: location_name"**: o skill já tenta se corrigir sozinho (algumas cidades exigem um formato diferente). Se persistir, rodar de novo geralmente resolve.
+- **Timeout na busca**: normalmente acontece quando se pede um estado inteiro. Use uma cidade.
+- **Erro "contract mismatch" no Apollo**: é o defeito conhecido do lado da AIsa (ver Limitações). O skill segue sozinho e entrega o resto do resultado.
 
 ## Atualizar
 
-Rodar o mesmo comando de instalação de novo — baixa a versão mais recente do `SKILL.md`.
+Mande de novo, no chat do Claude Code, a mesma mensagem da instalação — ela baixa a versão mais recente do `SKILL.md`. O skill é atualizado aqui no repositório conforme novos testes.

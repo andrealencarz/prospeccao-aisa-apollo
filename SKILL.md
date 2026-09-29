@@ -69,9 +69,10 @@ arguments: { id: <id retornado> }
 ```
 Isso é **enriquecimento opcional**, não a base do resultado — se o Apollo estiver instável (erro de contrato/502, já aconteceu antes) ou não achar nada, seguir o fluxo normalmente e entregar a tabela com o que já tem (título + Google Maps), mencionando em uma frase que o enriquecimento extra não completou dessa vez.
 `founded_year` do Apollo, quando vier, entra como informação extra na tabela final — mas não é mais o critério de ranking (isso agora é `votes_count`).
+`post_apollo_people_match` retorna também `linkedin_url` da pessoa (perfil dela no LinkedIn) — **sempre capturar esse campo quando vier** e incluir na tabela final como link. Não existe fonte de LinkedIn pra quem foi identificado só pelo título (passo 7) — nesse caso o campo fica "—", não inventar nem tentar adivinhar a URL.
 
 ### 10. Entregar resultado final
-Tabela: empresa | avaliações (proxy de novo) | endereço | telefone | site | responsável (título ou Apollo, o que achou primeiro) | fundação Apollo (se achou) | e-mail/telefone pessoal (se achou via Apollo). Fechar com 1-2 frases resumindo ajustes automáticos feitos, sem transformar isso em pergunta.
+Tabela: empresa | avaliações (proxy de novo) | endereço | telefone | site | responsável (título ou Apollo, o que achou primeiro) | fundação Apollo (se achou) | e-mail/telefone pessoal (se achou via Apollo) | **LinkedIn do responsável (se achou via Apollo, senão "—")**. Fechar com 1-2 frases resumindo ajustes automáticos feitos, sem transformar isso em pergunta.
 
 ## Defaults (decidir sozinho, não perguntar)
 

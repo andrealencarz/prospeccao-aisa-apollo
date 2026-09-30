@@ -4,7 +4,15 @@ Skill do Claude Code pra prospecção B2B ativa. Você diz o nicho e a cidade, o
 
 ## Instalar
 
-### Opção fácil — sem terminal (recomendado pra quem não é técnico)
+### No app do Claude (Configurações → Habilidades)
+
+1. Baixe o arquivo **[prospeccao-aisa-apollo.zip](https://github.com/andrealencarz/prospeccao-aisa-apollo/raw/main/prospeccao-aisa-apollo.zip)** (não descompacte).
+2. No app do Claude, vá em **Configurações → Habilidades → Fazer upload de uma habilidade**.
+3. Selecione o `.zip` baixado e clique em **Fazer upload**.
+
+⚠️ Use esse `.zip` específico — **não** o "Download ZIP" do botão verde do GitHub. Aquele pacote traz o repositório inteiro numa pasta com outro nome e o app recusa.
+
+### No Claude Code, pelo chat (sem terminal)
 
 Abra o Claude Code, cole a mensagem abaixo no chat e mande:
 
@@ -20,7 +28,7 @@ esse bloco se ele já existir.
 
 O próprio Claude baixa o arquivo e configura tudo. Depois é só usar `/prospeccao-aisa-apollo` normalmente.
 
-### Opção terminal (pra quem tem familiaridade)
+### No Claude Code, pelo terminal (pra quem tem familiaridade)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/andrealencarz/prospeccao-aisa-apollo/main/install.sh | bash
@@ -48,11 +56,13 @@ Se o Claude conseguir listar operações do Apollo/DataForSEO, está tudo certo.
 
 ## Usar
 
-No chat do Claude Code:
+No Claude Code:
 
 ```
 /prospeccao-aisa-apollo <nicho> <cidade>
 ```
+
+No app do Claude (instalado pelas Habilidades), basta pedir em linguagem natural, por exemplo: "prospecte gráficas em Teresina".
 
 Exemplos:
 ```
@@ -93,4 +103,7 @@ Quando a primeira busca vem cheia (nicho denso), o skill puxa uma segunda leva s
 
 ## Atualizar
 
-Mande de novo, no chat do Claude Code, a mesma mensagem da instalação — ela baixa a versão mais recente do `SKILL.md`. O skill é atualizado aqui no repositório conforme novos testes.
+- **App do Claude (Habilidades):** baixe o `.zip` de novo e faça o upload outra vez.
+- **Claude Code:** mande de novo a mesma mensagem da instalação — ela baixa a versão mais recente do `SKILL.md`.
+
+O skill é atualizado aqui no repositório conforme novos testes.

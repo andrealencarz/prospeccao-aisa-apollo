@@ -1,3 +1,8 @@
+---
+name: prospeccao-aisa-apollo
+description: Prospecção B2B ativa no Brasil. Encontra empresas de um nicho numa cidade (Google Maps + Apollo, via conector MCP da AIsa), prioriza as provavelmente recém-abertas (poucas avaliações no Google) e entrega tabela com endereço, telefone, site, responsável e LinkedIn. Use quando o usuário pedir para prospectar, buscar leads ou listar empresas/negócios de um nicho em uma cidade (ex. "gráficas em Teresina", "agência digital Salvador", "dentistas em Fortaleza"). Requer o conector AIsa ativo.
+---
+
 # /prospeccao-aisa-apollo
 
 Prospecção B2B ativa: encontra empresas com probabilidade alta de terem aberto/expandido recentemente, num nicho e cidade que o usuário passar, e monta lista de contatos qualificada. Motor principal: **Google Maps** (DataForSEO, via AIsa). Motor secundário/enriquecimento: **Apollo** (via AIsa).

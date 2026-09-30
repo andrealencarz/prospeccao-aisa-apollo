@@ -1,20 +1,56 @@
 # prospeccao-aisa-apollo
 
-Skill do Claude Code pra prospecção B2B ativa. Você diz o nicho e a cidade, o Claude busca empresas prováveis de terem aberto recentemente, com endereço, telefone, avaliações e (quando dá) o nome do responsável — tudo sem precisar programar ou saber usar API.
+Skill de prospecção B2B ativa para o **Claude** (app/web) e para o **Claude Code**. Você diz o nicho e a cidade, o Claude busca empresas prováveis de terem aberto recentemente, com endereço, telefone, site, avaliações e (quando dá) o nome do responsável — tudo sem precisar programar ou saber usar API.
 
-## Instalar
+## Antes de tudo: conectar a AIsa
 
-### No app do Claude (Configurações → Habilidades)
+A **AIsa** é um **conector MCP** (Model Context Protocol) — um "plugin" que dá ao Claude acesso a mais de 950 fontes de dados (Google Maps, Apollo, redes sociais, etc.) com uma chave só. É o que o skill usa por baixo dos panos. Sem esse conector ativo, o skill instala mas não tem o que buscar. Vale tanto pro Claude quanto pro Claude Code.
 
-1. Baixe o arquivo **[prospeccao-aisa-apollo.zip](https://github.com/andrealencarz/prospeccao-aisa-apollo/raw/main/prospeccao-aisa-apollo.zip)** (não descompacte).
-2. No app do Claude, vá em **Configurações → Habilidades → Fazer upload de uma habilidade**.
-3. Selecione o `.zip` baixado e clique em **Fazer upload**.
+1. Crie uma conta e gere uma chave de API em [aisa.one](https://aisa.one).
+2. No app do Claude, vá em **Configurações → Conectores → Adicionar conector** e informe:
+   - URL: `https://mcp.aisa.one/mcp`
+   - Cabeçalho de autorização: `Authorization: Bearer SUA_CHAVE_AQUI` (a chave do passo 1)
+3. Se não achar essa tela ou tiver dúvida, pergunte direto pro Claude: "me ajuda a conectar o servidor MCP da AIsa, a URL é `https://mcp.aisa.one/mcp`" — ele te guia pela interface da sua versão do app.
 
-⚠️ Use esse `.zip` específico — **não** o "Download ZIP" do botão verde do GitHub. Aquele pacote traz o repositório inteiro numa pasta com outro nome e o app recusa.
+Pra testar, peça no chat: `liste as ferramentas disponíveis da AIsa`. Se aparecerem operações do Apollo/DataForSEO, está tudo certo.
 
-### No Claude Code, pelo chat (sem terminal)
+---
 
-Abra o Claude Code, cole a mensagem abaixo no chat e mande:
+## Instalação no Claude (app de desktop ou claude.ai)
+
+### Instalar
+
+1. Baixe o arquivo **[prospeccao-aisa-apollo.zip](https://github.com/andrealencarz/prospeccao-aisa-apollo/raw/main/prospeccao-aisa-apollo.zip)** — **não descompacte**.
+2. Em **Configurações → Recursos**, confirme que a **execução de código e criação de arquivos** está ativada (habilidades dependem disso).
+3. Vá em **Configurações → Habilidades → Fazer upload de uma habilidade**.
+4. Selecione o `.zip` baixado e clique em **Fazer upload**.
+
+⚠️ Use esse `.zip` específico — **não** o botão verde "Code → Download ZIP" do GitHub. Aquele pacote traz o repositório inteiro numa pasta com outro nome, e o app recusa com o erro *"SKILL.md must start with YAML frontmatter"*.
+
+### Usar
+
+Peça em linguagem natural, numa conversa normal:
+
+```
+prospecte gráficas em Teresina
+```
+```
+busque leads de agência digital em Salvador
+```
+
+O Claude reconhece o pedido e usa a habilidade sozinho.
+
+### Atualizar
+
+Baixe o `.zip` de novo e faça o upload outra vez em **Configurações → Habilidades**.
+
+---
+
+## Instalação no Claude Code
+
+### Instalar — pelo chat (sem terminal, recomendado)
+
+Abra o Claude Code, cole a mensagem abaixo e mande:
 
 ```
 Instale esse skill pra mim: baixe o conteúdo de
@@ -26,43 +62,21 @@ com skill: "prospeccao-aisa-apollo" antes de fazer qualquer outra coisa. Não du
 esse bloco se ele já existir.
 ```
 
-O próprio Claude baixa o arquivo e configura tudo. Depois é só usar `/prospeccao-aisa-apollo` normalmente.
+O próprio Claude baixa o arquivo e configura tudo.
 
-### No Claude Code, pelo terminal (pra quem tem familiaridade)
+### Instalar — pelo terminal (alternativa pra quem tem familiaridade)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/andrealencarz/prospeccao-aisa-apollo/main/install.sh | bash
 ```
 
-Isso baixa o `SKILL.md` do repositório pra `~/.claude/skills/prospeccao-aisa-apollo/` e registra o gatilho `/prospeccao-aisa-apollo` no seu `~/.claude/CLAUDE.md`. Seguro rodar mais de uma vez — não duplica nada.
+Faz o mesmo que a mensagem acima. Seguro rodar mais de uma vez — não duplica nada.
 
-## Pré-requisito: MCP da AIsa conectado
-
-A **AIsa** é um **conector MCP** (Model Context Protocol) — um "plugin" que dá ao Claude acesso a mais de 950 APIs de dados (Google Maps, Apollo, redes sociais, etc.) usando uma chave só. É isso que o skill usa por baixo dos panos. Sem esse conector ativo na sua conta, o skill instala mas não tem o que buscar.
-
-**Passo a passo:**
-
-1. Crie uma conta e gere uma chave de API em [aisa.one](https://aisa.one).
-2. No app do Claude, procure nas Configurações por algo como "Conectores" ou "MCP Servers" → "Adicionar conector" e informe:
-   - URL: `https://mcp.aisa.one/mcp`
-   - Cabeçalho de autorização: `Authorization: Bearer SUA_CHAVE_AQUI` (a chave que você gerou no passo 1)
-3. Se não achar essa tela ou tiver qualquer dúvida, pergunte direto pro Claude no chat: "me ajuda a conectar o servidor MCP da AIsa, a URL é `https://mcp.aisa.one/mcp` e minha chave é `SUA_CHAVE_AQUI`" — ele te guia pela interface da sua versão específica do app.
-
-Depois de conectado, teste digitando no Claude Code:
-```
-liste as ferramentas disponíveis da AIsa
-```
-Se o Claude conseguir listar operações do Apollo/DataForSEO, está tudo certo.
-
-## Usar
-
-No Claude Code:
+### Usar
 
 ```
 /prospeccao-aisa-apollo <nicho> <cidade>
 ```
-
-No app do Claude (instalado pelas Habilidades), basta pedir em linguagem natural, por exemplo: "prospecte gráficas em Teresina".
 
 Exemplos:
 ```
@@ -71,6 +85,14 @@ Exemplos:
 /prospeccao-aisa-apollo imobiliária Aldeota Fortaleza
 /prospeccao-aisa-apollo gráfica Teresina
 ```
+
+### Atualizar
+
+Mande de novo a mesma mensagem de instalação — ela baixa a versão mais recente do `SKILL.md`.
+
+---
+
+## Dicas de uso (Claude e Claude Code)
 
 Use sempre **cidade** (com bairro opcional). Se pedir só o estado ("agência digital Ceará"), o skill busca na capital automaticamente — buscar o estado inteiro de uma vez trava.
 
@@ -97,13 +119,11 @@ Quando a primeira busca vem cheia (nicho denso), o skill puxa uma segunda leva s
 
 ## Se der erro
 
+- **"SKILL.md must start with YAML frontmatter" ao fazer upload no Claude**: você baixou o zip errado (o botão verde "Download ZIP" do GitHub). Baixe o [prospeccao-aisa-apollo.zip](https://github.com/andrealencarz/prospeccao-aisa-apollo/raw/main/prospeccao-aisa-apollo.zip) e tente de novo.
 - **"Invalid Field: location_name"**: o skill já tenta se corrigir sozinho (algumas cidades exigem um formato diferente). Se persistir, rodar de novo geralmente resolve.
 - **Timeout na busca**: normalmente acontece quando se pede um estado inteiro. Use uma cidade.
 - **Erro "contract mismatch" no Apollo**: é o defeito conhecido do lado da AIsa (ver Limitações). O skill segue sozinho e entrega o resto do resultado.
 
-## Atualizar
+## Atualizações
 
-- **App do Claude (Habilidades):** baixe o `.zip` de novo e faça o upload outra vez.
-- **Claude Code:** mande de novo a mesma mensagem da instalação — ela baixa a versão mais recente do `SKILL.md`.
-
-O skill é atualizado aqui no repositório conforme novos testes.
+O skill é atualizado aqui no repositório conforme novos testes. Pra pegar a versão nova, siga o passo **Atualizar** da seção do seu app (Claude ou Claude Code).
